@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meowfont - ทดลองพิมพ์ฟอนต์</title>
+    <style>
+        /* โหลดฟอนต์จากไฟล์/ลิงก์ */
+        @font-face {
+            font-family: 'MF Core pie';
+            /* ใช้ Direct Link จาก Google Drive ที่คุณส่งมา */
+            src: url('https://docs.google.com/uc?export=download&id=17Uz5wzRe9uPEdD053GzH_IhdEO_zGRQD') format('truetype');
+        }
+
+        @font-face {
+            font-family: 'MF Thai tea';
+            src: url('MF Thai tea.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f7;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* --- ส่วนที่เพิ่มใหม่ตามเงื่อนไข (คงโครงสร้างเดิม) --- */
+        .header-section {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        /* ส่วน Badges */
+        .badges-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .badge {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .bg-red { background-color: #ff5f56; }
+        .bg-yellow { background-color: #ffbd2e; }
+        .bg-green { background-color: #27c93f; }
+
+        /* Status Bar */
+        .status-bar {
+            background: #e0e0e2;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #27c93f;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+            animation: pulse 2s infinite;
+        }
+
+        /* ปุ่มเช็คคิวงานแบบเส้นประ */
+        .queue-button-dashed {
+            border: 2px dashed #ccc;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.3s;
+            margin-top: 10px;
+            text-decoration: none;
+            display: block;
+        }
+        .queue-button-dashed:hover {
+            border-color: #999;
+            background: #fff;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+        /* --- จบส่วนที่เพิ่มใหม่ --- */
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .sub-title {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        select, input[type="range"] {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        #preview-area {
+            width: 100%;
+            min-height: 200px;
+            border: none;
+            outline: none;
+            font-family: 'MF Core pie';
+            font-size: 48px;
+            color: #222;
+            resize: vertical;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .font-info {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #999;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <div class="badges-container">
+            <span class="badge bg-red"></span>
+            <span class="badge bg-yellow"></span>
+            <span class="badge bg-green"></span>
+        </div>
+
+        <div class="status-bar">
+            <span><span class="status-dot"></span> ระบบพร้อมใช้งาน (Queue: ว่าง)</span>
+            <span>v1.0.2</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Meowfont</h1>
+        <p class="sub-title">ทดลองฟอนต์ก่อนซื้อได้เลย</p>
+
+        <div class="controls">
+            <div class="control-group">
+                <label for="font-select">เลือกฟอนต์:</label>
+                <select id="font-select">
+                    <option value="MF Core pie">ฟอนต์พายข้าวโพด</option>
+                    <option value="MF Thai tea">ฟอนต์ชาไทย</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="size-slider">ขนาดฟอนต์: <span id="size-display">48px</span></label>
+                <input type="range" id="size-slider" min="12" max="150" value="48">
+            </div>
+        </div>
+
+        <div contenteditable="true" id="preview-area">
+            ลองพิมพ์ข้อความที่นี่เพื่อทดสอบฟอนต์...
+            (กขค ABC 123)
+        </div>
+
+        <a href="#" class="queue-button-dashed">
+            --- คลิกเพื่อเช็คคิวงานปัจจุบัน ---
+        </a>
+
+        <div class="font-info">
+            กำลังใช้งานฟอนต์: <span id="current-font-name">ฟอนต์พายข้าวโพด</span>
+        </div>
+    </div>
+
+    <script>
+        const fontSelect = document.getElementById('font-select');
+        const sizeSlider = document.getElementById('size-slider');
+        const sizeDisplay = document.getElementById('size-display');
+        const previewArea = document.getElementById('preview-area');
+        const currentFontName = document.getElementById('current-font-name');
+
+        // เปลี่ยนฟอนต์
+        fontSelect.addEventListener('change', (e) => {
+            const selectedFont = e.target.value;
+            const fontText = e.target.options[e.target.selectedIndex].text;
+            previewArea.style.fontFamily = selectedFont;
+            currentFontName.innerText = fontText;
+        });
+
+        // เปลี่ยนขนาด
+        sizeSlider.addEventListener('input', (e) => {
+            const size = e.target.value + 'px';
+            previewArea.style.fontSize = size;
+            sizeDisplay.innerText = size;
+        });
+
+        // ล้างคำเริ่มต้นเมื่อคลิกครั้งแรก
+        previewArea.addEventListener('focus', function() {
+            if (this.innerText.trim() === 'ลองพิมพ์ข้อความที่นี่เพื่อทดสอบฟอนต์... (กขค ABC 123)') {
+                this.innerText = '';
+            }
+        }, { once: true });
+    </script>
+
+</body>
+</html>
